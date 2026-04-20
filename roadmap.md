@@ -180,4 +180,49 @@ Usiamo i costruttori o funzioni globali per forzare la conversione:
 #### Convertire in Booleano
 - `Boolean(valore)`: Utile per verificare se un valore è "vero" o "falso" secondo le regole di JS.
 
+## Data Structures
+
+Le strutture dati in JavaScript possono essere suddivise in due grandi categorie: **Built-in** (integrate) e **Custom** (personalizzate).
+
+### 1. Strutture Dati: Built-in vs Custom
+- **Built-in (Predefinite):** Sono integrate nativamente nel linguaggio. Possono essere utilizzate immediatamente (es: `Array`, `Object`, `Map`, `Set`).
+- **Custom (Personalizzate):** Non sono fornite di default e devono essere create "da zero" dallo sviluppatore per risolvere problemi specifici (es: `Linked List`, `Tree`, `Graph`, `Stack`, `Queue`).
+
 ---
+
+### 2. Collezioni: "Indexed" vs "Keyed"
+In JavaScript, le collezioni di dati si dividono principalmente in due tipologie basate su come si accede ai dati:
+
+- **Indexed Collections:** Collezioni ordinate in cui i dati sono indicizzati da un numero (indice).
+- **Keyed Collections:** Collezioni associative in cui i dati sono organizzati tramite chiavi (non necessariamente numeriche) e sono iterabili nell'ordine di inserimento.
+
+---
+
+### 3. Indexed Collections: Gli Array
+Gli **Array** sono la principale collezione indicizzata in JavaScript. Sono oggetti utilizzati per memorizzare liste ordinate di valori.
+
+- **Indice Numerico:** Ogni elemento ha una posizione che parte da `0`.
+- **Flessibilità:** Possono contenere tipi di dati misti (numeri, stringhe, oggetti, altri array).
+- **Assegnazione:** Possono essere assegnati a variabili e passati come argomenti.
+
+---
+
+### 4. Operazioni e Metodi degli Array
+Essendo oggetti, gli array hanno proprietà (come `.length`) e metodi integrati per manipolare i dati:
+
+```javascript
+let frutti = ["Mela", "Banana", "Arancia"];
+
+// Aggiungere/Rimuovere elementi
+frutti.push("Pera");    // Aggiunge alla fine
+frutti.pop();           // Rimuove l'ultimo
+
+// Metodi di iterazione e trasformazione
+frutti.forEach(f => console.log(f));
+let maiuscolo = frutti.map(f => f.toUpperCase());
+```
+
+---
+
+### 5. Keyed Collections
+Le **Keyed Collections** sono collezioni ordinate per una chiave invece che per un indice numerico. Sono collezioni associative di natura; oggetti come `Map` e `WekMap`, `Set` e `WeakSet` appartengono a questa categoria e sono iterabili nell'ordine di inserimento dei loro elementi.
