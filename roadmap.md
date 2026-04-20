@@ -226,3 +226,11 @@ let maiuscolo = frutti.map(f => f.toUpperCase());
 
 ### 5. Keyed Collections
 Le **Keyed Collections** sono collezioni ordinate per una chiave invece che per un indice numerico. Sono collezioni associative di natura; oggetti come `Map` e `WekMap`, `Set` e `WeakSet` appartengono a questa categoria e sono iterabili nell'ordine di inserimento dei loro elementi.
+
+---
+
+### 6. Structured Data
+I **Structured Data** (Dati Strutturati) sono formati standardizzati per fornire informazioni su una pagina e classificarne il contenuto.
+
+- **Utilizzo SEO:** Vengono utilizzati dai motori di ricerca (come Google) per comprendere meglio il contesto semantico delle pagine web, estrarre informazioni strutturate dal web e popolare il Knowledge Graph globale.
+- **Formati Comuni:** Uno dei formati più diffusi per rappresentare i dati strutturati è il **JSON** (JavaScript Object Notation), che permette di organizzare le informazioni in coppie chiave-valore leggibili sia dalle macchine che dagli esseri umani.
