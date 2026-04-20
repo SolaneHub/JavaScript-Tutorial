@@ -124,3 +124,60 @@ Permettono di trattare i tipi primitivi come oggetti, dando accesso a metodi uti
 - **`Date`**: Indispensabile per gestire date, orari e calcoli temporali.
 - **`Error`**: Utilizzato per generare messaggi di errore personalizzati o gestire eccezioni.
 - **`Function`**: Il costruttore alla base di tutte le funzioni JavaScript.
+
+## Type Casting e Coercion
+
+Il Type Casting (o Type Conversion) è il processo di conversione di un valore da un tipo di dato a un altro (ad esempio, da una stringa a un numero).
+
+### 1. Type Conversion vs Type Coercion
+
+In JavaScript, distinguiamo due modi in cui avviene la conversione:
+
+- **Type Conversion (Esplicita):** Quando lo sviluppatore converte intenzionalmente un tipo in un altro usando funzioni integrate.
+- **Type Coercion (Implicita):** Quando JavaScript converte automaticamente i tipi durante un'operazione (ad esempio, sommando un numero e una stringa).
+
+---
+
+### 2. Type Coercion (Conversione Implicita)
+
+JavaScript è un linguaggio **debolmente tipizzato** (*loosely typed*), il che significa che cerca di "aiutarci" convertendo i valori per far funzionare le operazioni.
+
+#### Esempi comuni:
+- **Stringhe e Numeri (+):** Se uno dei due operandi è una stringa, l'operatore `+` concatena invece di sommare.
+  ```javascript
+  console.log("5" + 2); // "52" (Il numero 2 diventa stringa)
+  ```
+- **Operazioni Matematiche (-, *, /):** JavaScript converte le stringhe in numeri.
+  ```javascript
+  console.log("10" - 2);  // 8
+  console.log("5" * "2"); // 10
+  ```
+- **Booleani:** In contesti logici (come un `if`), i valori vengono convertiti in booleani.
+
+---
+
+### 3. Type Conversion (Conversione Esplicita)
+
+Usiamo i costruttori o funzioni globali per forzare la conversione:
+
+#### Convertire in Numero
+- `Number(valore)`: Converte in numero (ritorna `NaN` se non possibile).
+- `parseInt(stringa)` / `parseFloat(stringa)`: Analizzano una stringa per estrarre un intero o un decimale.
+  ```javascript
+  let str = "42";
+  let num = Number(str); // 42
+  let prezzo = parseInt("10.50€"); // 10
+  ```
+
+#### Convertire in Stringa
+- `String(valore)` o il metodo `.toString()`.
+  ```javascript
+  let bool = true;
+  String(bool);      // "true"
+  (123).toString();  // "123"
+  ```
+
+#### Convertire in Booleano
+- `Boolean(valore)`: Utile per verificare se un valore è "vero" o "falso" secondo le regole di JS.
+
+---
