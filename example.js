@@ -46,3 +46,15 @@ let x = 5;
 x += 2;
 x *= 3;
 console.log(x);
+
+/**
+ * * Exercise 4
+ * ? TASK: Predict the output of these comparisons.
+ * ! NOTE: `==` performs type coercion, while `===` does not. `Object.is` handles `NaN` and signs of zero differently than `===`.
+ * TODO: Research the "SameValue" algorithm used by `Object.is`.
+ */
+
+console.log(5 == "5"); // True
+console.log(5 === "5"); // False 
+console.log(Object.is(NaN, NaN)); // True
+console.log(Object.is(+0, -0)); // False
