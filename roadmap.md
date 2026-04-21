@@ -449,3 +449,73 @@ I tipi di errore più comuni sono:
 - **`RangeError`**: Un valore è al di fuori del campo di operazioni consentite.
 - **`ReferenceError`**: Una variabile o un oggetto viene chiamato prima della sua dichiarazione o non esiste.
 - **`SyntaxError`**: Il codice contiene errori di sintassi.
+
+## Expressions and Operators
+
+Un'espressione è un pezzo valido di codice che fa riferimento ad un valore.
+Ci sono 2 tipi di espressioni, quelli che hanno effetti collaterali e quelli sono puramente valutativi.
+
+Esistono 8 Operatori:
+
+- **Conditional Operators (Ternary):** conosciuto anche come operatore ternario, è l'unico operatore che usa 3 operandi: `condition ? val_for_true : val_for_false`.
+  ```javascript
+  let eta = 20;
+  let status = (eta >= 18) ? "adulto" : "minore"; // "adulto"
+  ```
+
+- **Comma Operators:** valuta ognuno dei suoi operandi da sinistra verso destra e ritorna il valore dell'ultimo operando. Usato comunemente nei cicli for.
+  ```javascript
+  let x = (1, 2, 3); // x riceve il valore 3
+  for (let i = 0, j = 10; i <= 10; i++, j--) { /* ... */ }
+  ```
+
+- **Unary Operators:** sono operatori speciali che considerano un singolo operando. Includono unary plus (`+`), unary minus (`-`), prefix/postfix increments (`++`) e prefix/postfix decrements (`--`).
+  ```javascript
+  let x = 5;
+  console.log(+x);     // 5 (unary plus)
+  console.log(-x);     // -5 (unary minus)
+
+  // Incremento e Decremento
+  let a = 1;
+  console.log(++a);    // 2 (prefix: incrementa e poi ritorna il valore)
+  console.log(a++);    // 2 (postfix: ritorna il valore e poi incrementa. Ora a è 3)
+
+  let b = 10;
+  console.log(--b);    // 9 (prefix decrement)
+  console.log(b--);    // 9 (postfix decrement. Ora b è 8)
+  ```
+
+- **Assignment Operators:** assegna un valore all'operando di sinistra basato sul valore di destra.
+  ```javascript
+  let x = 10;
+  x += 5; // x = x + 5 (15)
+  x *= 2; // x = x * 2 (30)
+  ```
+
+- **Comparison Operators:** operatori che confrontano valori e ritornano `true` o `false`.
+  ```javascript
+  console.log(10 > 5);      // true
+  console.log(10 === "10"); // false (uguaglianza stretta)
+  console.log(5 !== 2);     // true
+  ```
+
+- **Arithmetic Operators:** eseguono operazioni matematiche classiche.
+  ```javascript
+  console.log(10 % 3);  // 1 (resto della divisione)
+  console.log(2 ** 3);  // 8 (elevamento a potenza)
+  ```
+
+- **Logical Operators:** operatori per la logica booleana e gestione valori nulli.
+  ```javascript
+  console.log(true && false); // false (AND)
+  console.log(true || false); // true (OR)
+  let nome = null;
+  console.log(nome ?? "Ospite"); // "Ospite" (Nullish Coalescing)
+  ```
+
+- **String Operators:** oltre ai confronti, l'operatore `+` concatena le stringhe.
+  ```javascript
+  let saluto = "Ciao " + "Mondo"; // "Ciao Mondo"
+  let msg = "Benvenuto";
+  msg += "!"; // "Benvenuto!"
+  ```
