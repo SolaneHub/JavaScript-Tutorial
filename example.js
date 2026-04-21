@@ -58,3 +58,22 @@ console.log(5 == "5"); // True
 console.log(5 === "5"); // False 
 console.log(Object.is(NaN, NaN)); // True
 console.log(Object.is(+0, -0)); // False
+
+/**
+ * * Exercise 5
+ * ? TASK: Experiment with explicit type conversion (Type Casting).
+ * ! NOTE: `Number()`, `String()`, and `Boolean()` are constructor functions used for explicit conversion.
+ * TODO: Analyze how different types (string, number, null) behave when converted to Boolean.
+ */
+
+let d = "10";
+let e = "10.5";
+let f = 0;
+let g = "hello";
+let h = null;
+
+console.log(Number(d), String(d), Boolean(d));
+console.log(Number(e), String(e), Boolean(e));
+console.log(Number(f), String(f), Boolean(f));
+console.log(Number(g), String(g), Boolean(g));
+console.log(Number(h), String(h), Boolean(h));
