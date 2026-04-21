@@ -234,3 +234,44 @@ I **Structured Data** (Dati Strutturati) sono formati standardizzati per fornire
 
 - **Utilizzo SEO:** Vengono utilizzati dai motori di ricerca (come Google) per comprendere meglio il contesto semantico delle pagine web, estrarre informazioni strutturate dal web e popolare il Knowledge Graph globale.
 - **Formati Comuni:** Uno dei formati più diffusi per rappresentare i dati strutturati è il **JSON** (JavaScript Object Notation), che permette di organizzare le informazioni in coppie chiave-valore leggibili sia dalle macchine che dagli esseri umani.
+
+## 21 Aprile - Equality Comparisons
+
+I Comparison Operators sono usati nei "Logical Statements" per determinare l'uguaglianza o la differenza tra variabili o valori. Possono essere utilizzati anche nei "Conditional Statements" per decidere quali azioni eseguire in base al risultato del confronto.
+
+In JavaScript, abbiamo tre strumenti principali per confrontare l'uguaglianza: `==`, `===` e `Object.is`.
+
+### 1. `==` (Abstract Equality)
+Questo operatore confronta due valori per l'uguaglianza, ma **converte i tipi** (Type Coercion) se sono diversi prima di effettuare il confronto.
+
+**Esempio:**
+```javascript
+console.log(5 == "5");      // true (la stringa "5" viene convertita in numero)
+console.log(1 == true);     // true
+console.log("" == false);   // true
+```
+
+### 2. `===` (Strict Equality)
+Questo operatore confronta sia il **valore** che il **tipo**. Non effettua alcuna conversione automatica. È lo standard consigliato nella maggior parte dei casi per evitare bug imprevisti.
+
+**Esempio:**
+```javascript
+console.log(5 === "5");     // false (tipi diversi: number vs string)
+console.log(1 === true);    // false
+console.log(0 === false);   // false
+```
+
+### 3. `Object.is` (Same-Value Equality)
+Determina se due valori sono "lo stesso valore". Si comporta quasi come `===`, ma gestisce in modo specifico alcuni casi limite come `NaN` e lo zero con segno (`+0` vs `-0`).
+
+**Esempio:**
+```javascript
+console.log(Object.is(NaN, NaN));   // true  (mentre NaN === NaN è false)
+console.log(Object.is(+0, -0));     // false (mentre +0 === -0 è true)
+```
+
+---
+
+#### Punti di attenzione:
+- **Coercion:** `Object.is` non applica mai la conversione dei tipi, a differenza di `==`.
+- **Casi limite:** L'unica differenza reale tra `===` e `Object.is` risiede nel trattamento di `NaN` (che `Object.is` considera uguale a se stesso) e degli zeri con segno.
