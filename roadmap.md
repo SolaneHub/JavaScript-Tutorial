@@ -350,3 +350,102 @@ for (let i = 0; i < 10; i++) {
     console.log(i);
 }
 ```
+
+## Control Flow
+
+In JavaScript, il `Control Flow` (flusso di controllo) rappresenta l'ordine in cui le istruzioni vengono eseguite dal computer. Di base, il codice viene eseguito riga per riga (sequenzialmente), ma questo flusso può essere alterato da condizioni, cicli e gestione delle eccezioni.
+
+Il codice può essere controllato tramite strutture specifiche: `Sequential`, `Conditional Statements`, `Exception Handling` e `Loops and Iterations`.
+
+### 1. Conditional Statements: `if`, `if ... else` e `switch`
+
+Le istruzioni condizionali permettono di eseguire blocchi di codice diversi in base al verificarsi di determinate condizioni.
+
+#### `if` e `else`
+L'istruzione `if` esegue un blocco se la condizione è `truthy`. Se la condizione è `falsy`, può essere eseguito un blocco alternativo tramite `else`.
+```javascript
+let temperatura = 25;
+
+if (temperatura > 30) {
+    console.log("Fa caldo!");
+} else if (temperatura > 20) {
+    console.log("Si sta bene."); // Eseguito se la prima è false e questa è true
+} else {
+    console.log("Fa freddo.");
+}
+```
+
+#### `switch`
+Lo `switch` valuta un'espressione confrontandola con diverse clausole `case`. È ideale quando si hanno molteplici opzioni basate su un singolo valore.
+```javascript
+let giorno = "Lunedì";
+
+switch (giorno) {
+    case "Lunedì":
+        console.log("Inizio settimana");
+        break; // Fondamentale per non eseguire i case successivi
+    case "Venerdì":
+        console.log("Quasi weekend!");
+        break;
+    default:
+        console.log("Un giorno normale"); // Eseguito se nessun case coincide
+}
+```
+
+---
+
+### 2. Exceptional Handling (Gestione delle Eccezioni)
+
+In JavaScript, le eccezioni sono oggetti. La maggior parte di esse sono istanze della classe globale `Error`. La gestione delle eccezioni permette al programma di non interrompersi bruscamente quando si verifica un errore imprevisto. È possibile lanciare eccezioni usando sia oggetti errore predefiniti che oggetti personalizzati.
+
+---
+
+### 3. Throw Statement
+
+L'istruzione `throw` viene utilizzata per "lanciare" un'eccezione definita dall'utente. L'esecuzione della funzione corrente viene interrotta, il codice successivo non viene eseguito e il controllo passa al primo blocco `catch` disponibile nella gerarchia delle chiamate. Se non esiste alcun `catch`, il programma viene terminato.
+
+**Esempio:**
+```javascript
+function controllaEta(eta) {
+    if (eta < 18) {
+        throw new Error("Devi essere maggiorenne!"); // Lancio di un Error object
+    }
+    return "Accesso consentito";
+}
+```
+
+---
+
+### 4. Try, Catch, Finally
+
+Esistono blocchi specifici per gestire gli errori in modo sicuro:
+
+- **`try`**: Contiene il codice che potrebbe generare un errore.
+- **`catch`**: Gestisce l'errore se si verifica nel blocco try.
+- **`finally`**: Esegue il codice dopo i primi due blocchi, indipendentemente dal risultato (errore o successo).
+
+**Esempio:**
+```javascript
+try {
+    let risultato = controllaEta(15);
+    console.log(risultato);
+} catch (errore) {
+    console.error("Si è verificato un errore: " + errore.message);
+} finally {
+    console.log("Operazione terminata."); // Utile per pulire variabili o chiudere connessioni
+}
+```
+
+---
+
+### 5. Error Objects
+
+Durante un errore a runtime, viene creato e lanciato un oggetto `Error`. Grazie a questo oggetto, siamo in grado di determinare il tipo di errore e gestirlo in base alla sua natura.
+
+I tipi di errore più comuni sono:
+- **`AggregateError`**: Collezione di errori lanciati contemporaneamente.
+- **`EvalError`**: Errore durante la valutazione di un'espressione tramite `eval()`.
+- **`InternalError`**: Errore interno del motore JavaScript (es: bug dell'engine).
+- **`RangeError`**: Un valore è al di fuori del campo di operazioni consentite.
+- **`ReferenceError`**: Una variabile o un oggetto viene chiamato prima della sua dichiarazione o non esiste.
+- **`SyntaxError`**: Il codice contiene errori di sintassi.
