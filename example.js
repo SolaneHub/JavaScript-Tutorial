@@ -90,3 +90,20 @@ console.log("10" - 2);   // 8 (Numeric subtraction)
 console.log("10" + 2);   // "102" (String concatenation)
 console.log("5" * "3");  // 15 (Numeric multiplication)
 console.log("8" / "2");  // 4 (Numeric division)
+
+/**
+ * * Exercise 7
+ * ? TASK: Predict which of these values are considered "Truthy" or "Falsy".
+ * ! NOTE: In JavaScript, every value has an inherent boolean value when evaluated in a logical context.
+ * TODO: Experiment with `!!` (double bang) to explicitly convert values to booleans.
+ */
+
+console.log(Boolean(0));          // Falsy
+console.log(Boolean(1));          // Truthy
+console.log(Boolean(""));         // Falsy
+console.log(Boolean(" "));        // Truthy
+console.log(Boolean(null));       // Falsy
+console.log(Boolean(undefined));  // Falsy
+console.log(Boolean(NaN));        // Falsy
+console.log(Boolean([]));         // Truthy (Empty array is an object!)
+console.log(Boolean({}));         // Truthy (Empty object is an object!)
