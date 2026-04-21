@@ -143,11 +143,11 @@ In JavaScript, distinguiamo due modi in cui avviene la conversione:
 JavaScript è un linguaggio **debolmente tipizzato** (*loosely typed*), il che significa che cerca di "aiutarci" convertendo i valori per far funzionare le operazioni.
 
 #### Esempi comuni:
-- **Stringhe e Numeri (+):** Se uno dei due operandi è una stringa, l'operatore `+` concatena invece di sommare.
+- **Stringhe e Numeri (`+`):** Se uno dei due operandi è una stringa, l'operatore `+` concatena invece di sommare.
   ```javascript
   console.log("5" + 2); // "52" (Il numero 2 diventa stringa)
   ```
-- **Operazioni Matematiche (-, *, /):** JavaScript converte le stringhe in numeri.
+- **Operazioni Matematiche (`-`, `*`, `/`):** JavaScript converte le stringhe in numeri.
   ```javascript
   console.log("10" - 2);  // 8
   console.log("5" * "2"); // 10
