@@ -123,3 +123,19 @@ console.log("" == false);        // true
 console.log("" === false);       // false
 console.log(null == undefined);  // true
 console.log(null === undefined); // false
+
+/**
+ * LEVEL 3: Scoping and Blocks
+ * * Exercise 9
+ * ? TASK: Predict the output and understand the scoping rules for `let` and `const`.
+ * ! NOTE: Both `let` and `const` have block scope, meaning they are only accessible within the block `{}` they are defined in.
+ * TODO: Explain why `console.log(eta)` results in a ReferenceError and what value `nome` will have.
+ */
+
+let nome = "Anna";
+if (true) {
+  let nome = "Luca";
+  const eta = 20;
+}
+console.log(nome);
+// console.log(eta); // Uncaught ReferenceError: eta is not defined
