@@ -107,3 +107,19 @@ console.log(Boolean(undefined));  // Falsy
 console.log(Boolean(NaN));        // Falsy
 console.log(Boolean([]));         // Truthy (Empty array is an object!)
 console.log(Boolean({}));         // Truthy (Empty object is an object!)
+
+/**
+ * * Exercise 8
+ * ? TASK: Predict the results of these common equality comparisons.
+ * ! NOTE: These are common JS interview questions regarding "Loose" vs "Strict" equality.
+ * TODO: Explain why `null == undefined` is true but `null === undefined` is false.
+ */
+
+console.log(1 == true);          // true
+console.log(1 === true);         // false
+console.log(0 == false);         // true
+console.log(0 === false);        // false
+console.log("" == false);        // true
+console.log("" === false);       // false
+console.log(null == undefined);  // true
+console.log(null === undefined); // false
