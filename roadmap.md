@@ -275,3 +275,78 @@ console.log(Object.is(+0, -0));     // false (mentre +0 === -0 è true)
 #### Punti di attenzione:
 - **Coercion:** `Object.is` non applica mai la conversione dei tipi, a differenza di `==`.
 - **Casi limite:** L'unica differenza reale tra `===` e `Object.is` risiede nel trattamento di `NaN` (che `Object.is` considera uguale a se stesso) e degli zeri con segno.
+
+## Loops and Iterations
+
+I cicli (loop) permettono di eseguire un blocco di codice ripetutamente finché una determinata condizione è soddisfatta. In JavaScript possiamo distinguere principalmente tra cicli basati su una condizione e cicli di iterazione.
+
+### 1. `while` e `do...while` (Cicli Condizionali)
+Questi cicli continuano a girare finché una condizione logica rimane vera.
+
+- **`while`**: Controlla la condizione **prima** di ogni esecuzione. Se è falsa dall'inizio, il codice non viene mai eseguito.
+- **`do...while`**: Esegue il codice **almeno una volta**, poi controlla la condizione.
+
+**Esempio:**
+```javascript
+let counter = 0;
+while (counter < 3) {
+    console.log("While loop: " + counter);
+    counter++;
+}
+
+let j = 0;
+do {
+    console.log("Eseguito almeno una volta");
+    j++;
+} while (j < 0);
+```
+
+---
+
+### 2. Il Ciclo `for` (Standard)
+È il ciclo più comune quando si conosce il numero di iterazioni. Si compone di inizializzazione, condizione e incremento.
+
+**Esempio:**
+```javascript
+for (let i = 0; i < 5; i++) {
+    console.log("Giro numero: " + i);
+}
+```
+
+---
+
+### 3. Iterare sulle Collezioni: `for...in` vs `for...of`
+Versioni moderne per scorrere dati in modo più leggibile.
+
+#### `for...in` (Indici e Chiavi)
+Restituisce le **chiavi** di un oggetto o gli **indici** di un array.
+```javascript
+const auto = { marca: "Fiat", modello: "500", anno: 2020 };
+for (let chiave in auto) {
+    console.log(chiave + ": " + auto[chiave]);
+}
+```
+
+#### `for...of` (Valori)
+Estrae direttamente i **valori** di un array o di un oggetto iterabile, senza dover usare l'indice.
+```javascript
+const colori = ["Rosso", "Verde", "Blu"];
+for (let colore of colori) {
+    console.log(colore);
+}
+```
+
+---
+
+### 4. Controllo del Flusso: `break` e `continue`
+- **`break`**: Esce immediatamente dal ciclo.
+- **`continue`**: Salta l'iterazione attuale e passa alla prossima.
+
+**Esempio:**
+```javascript
+for (let i = 0; i < 10; i++) {
+    if (i === 3) continue; // Salta il 3
+    if (i === 7) break;    // Si ferma al 7
+    console.log(i);
+}
+```
