@@ -77,3 +77,16 @@ console.log(Number(e), String(e), Boolean(e));
 console.log(Number(f), String(f), Boolean(f));
 console.log(Number(g), String(g), Boolean(g));
 console.log(Number(h), String(h), Boolean(h));
+
+/**
+ * LEVEL 2: Coercion and Conversion
+ * * Exercise 6
+ * ? TASK: Predict the output of these implicit type conversions (Type Coercion).
+ * ! NOTE: In JS, the `+` operator is overloaded for both addition and string concatenation. Other arithmetic operators (-, *, /) always trigger numeric conversion.
+ * TODO: Compare the behavior of `+` vs `-` when one operand is a string.
+ */
+
+console.log("10" - 2);   // 8 (Numeric subtraction)
+console.log("10" + 2);   // "102" (String concatenation)
+console.log("5" * "3");  // 15 (Numeric multiplication)
+console.log("8" / "2");  // 4 (Numeric division)
