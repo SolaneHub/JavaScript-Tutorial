@@ -34,3 +34,15 @@ b = 20; // OK: let is reassignable
 console.log("a (var):", a);
 console.log("b (let):", b);
 console.log("c (const):", c);
+
+/**
+ * * Exercise 3
+ * ? TASK: Predict the final value of `x` without executing the script.
+ * ! NOTE: Compound assignments (+=, *=) modify the variable in-place sequentially.
+ * TODO: Verify the sequence: (5 + 2) * 3 = 21.
+ */
+
+let x = 5;
+x += 2;
+x *= 3;
+console.log(x);
