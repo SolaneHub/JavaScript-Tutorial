@@ -519,3 +519,8 @@ Esistono 8 Operatori:
   let msg = "Benvenuto";
   msg += "!"; // "Benvenuto!"
   ```
+
+  ## 24 Aprile - Functions
+  ### Le funzioni servono per farci riusare codice. Si eseguono ogni volta che vengono richiamate.
+
+  
