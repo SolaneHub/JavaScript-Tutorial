@@ -27,8 +27,7 @@ function createTaskElement(taskData) {
   taskBox.style.transform = taskData.rotation;
 
   btnDelete.addEventListener("click", () => {
-    tasksList = tasksList.filter((t) => t.name !== taskData.name);
-    localStorage.setItem("myTasks", JSON.stringify(tasksList));
+    deleteTask(taskData.id);
     taskBox.remove();
   });
 
@@ -55,9 +54,29 @@ taskButton.addEventListener("click", () => {
     return;
   }
 
+  const taskXY = calculateTaskPosition();
+
+  const newTask = {
+    name: taskName,
+    x: taskXY.x,
+    y: taskXY.y,
+    rotation: `rotate(${(getSecureRandom() - 0.5) * 15}deg)`,
+    id: Date.now(),
+  };
+
+  tasksList.push(newTask);
+  saveTask();
+
+  createTaskElement(newTask);
+
+  taskNameInput.value = "";
+});
+
+function calculateTaskPosition() {
   const taskSize = 150;
   let x, y;
   let overlap = true;
+
   while (overlap) {
     x = getSecureRandom() * (window.innerWidth - taskSize);
     y = getSecureRandom() * (window.innerHeight - taskSize);
@@ -71,17 +90,14 @@ taskButton.addEventListener("click", () => {
     }
   }
 
-  const newTask = {
-    name: taskName,
-    x: x,
-    y: y,
-    rotation: `rotate(${(getSecureRandom() - 0.5) * 15}deg)`,
-  };
+  return { x, y };
+}
 
-  tasksList.push(newTask);
+function saveTask() {
   localStorage.setItem("myTasks", JSON.stringify(tasksList));
+}
 
-  createTaskElement(newTask);
-
-  taskNameInput.value = "";
-});
+function deleteTask(taskId) {
+  tasksList = tasksList.filter((t) => t.id !== taskId);
+  saveTask();
+}
