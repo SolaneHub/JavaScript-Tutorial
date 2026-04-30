@@ -52,8 +52,25 @@ select {
   flex-direction: column;
   align-items: center;
   overflow-y: auto;
-  padding: 20px 0;
+  padding: 120px 0 50px 0;
   scroll-behavior: smooth;
+  position: relative;
+  z-index: 10;
+}
+
+.main-title {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  font-family: "Permanent Marker", cursive;
+  font-size: 3rem;
+  color: var(--text-main);
+  text-shadow: 3px 3px 0px var(--highlight);
+  text-align: center;
+  width: 100%;
+  pointer-events: none;
 }
 
 .createMemory,
@@ -165,6 +182,9 @@ body > .createMemory {
   font-size: 0.9rem;
   line-height: 1.6;
   color: var(--action);
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .post-date {

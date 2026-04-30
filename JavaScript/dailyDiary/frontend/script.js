@@ -2,7 +2,57 @@ const body = document.querySelector("body");
 const scrollingSection = document.querySelector(".scrollingSection");
 const createMemory = document.querySelector(".createMemory");
 const memoryBox = document.querySelector(".memoryBox");
+const mainTitle = document.querySelector(".main-title");
 let isBoxOpen = false;
+
+scrollingSection.addEventListener("scroll", () => {
+  const scrollTop = scrollingSection.scrollTop;
+  const fadeDistance = 150;
+  let opacity = 1 - (scrollTop / fadeDistance);
+  if (opacity < 0) opacity = 0;
+  if (mainTitle) mainTitle.style.opacity = opacity;
+});
+
+const API_URL = 'http://localhost:5000/api';
+
+async function fetchEntries() {
+  try {
+    const res = await fetch(`${API_URL}/entries`);
+    const entries = await res.json();
+    scrollingSection.innerHTML = '';
+    entries.forEach(renderEntry);
+  } catch (err) {
+    console.error('Error fetching entries:', err);
+  }
+}
+
+function renderEntry(entry) {
+  const post = document.createElement("div");
+  post.classList.add("post");
+
+  const postTitle = document.createElement("h3");
+  postTitle.innerText = entry.title;
+
+  const postContent = document.createElement("p");
+  postContent.innerText = entry.content;
+
+  const postDate = document.createElement("p");
+  postDate.innerText = new Date(entry.date).toLocaleString("it-IT", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+  postDate.classList.add("post-date");
+
+  post.append(postTitle, postContent, postDate);
+  const randomRotate = getSecureRandom() * 4 - 2;
+  post.style.transform = `rotate(${randomRotate}deg)`;
+  scrollingSection.append(post);
+}
+
+fetchEntries();
 
 const weatherMapping = {
   it: {
@@ -319,35 +369,50 @@ createMemory.addEventListener("click", () => {
   saveBtn.innerText = "Fissa il ricordo";
   saveBtn.classList.add("createMemory");
 
-  saveBtn.addEventListener("click", () => {
+  saveBtn.addEventListener("click", async () => {
     if (title.value === "" || testo.value === "") {
       return;
     } else {
-      const post = document.createElement("div");
-      post.classList.add("post");
+      try {
+        const res = await fetch(`${API_URL}/entries`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ title: title.value, content: testo.value })
+        });
 
-      const postTitle = document.createElement("h3");
-      postTitle.innerText = title.value;
+        if (res.ok) {
+          const newEntry = await res.json();
+          // Prepend new entry to UI
+          const post = document.createElement("div");
+          post.classList.add("post");
 
-      const postContent = document.createElement("p");
-      postContent.innerText = testo.value;
+          const postTitle = document.createElement("h3");
+          postTitle.innerText = newEntry.title;
 
-      const postDate = document.createElement("p");
-      postDate.innerText = new Date().toLocaleString("it-IT", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-      });
-      postDate.classList.add("post-date");
+          const postContent = document.createElement("p");
+          postContent.innerText = newEntry.content;
 
-      post.append(postTitle, postContent, postDate);
-      const randomRotate = getSecureRandom() * 4 - 2;
-      post.style.transform = `rotate(${randomRotate}deg)`;
-      scrollingSection.prepend(post);
-      memoryBox.remove();
-      isBoxOpen = false;
+          const postDate = document.createElement("p");
+          postDate.innerText = new Date().toLocaleString("it-IT", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+          });
+          postDate.classList.add("post-date");
+
+          post.append(postTitle, postContent, postDate);
+          const randomRotate = getSecureRandom() * 4 - 2;
+          post.style.transform = `rotate(${randomRotate}deg)`;
+          scrollingSection.prepend(post);
+
+          memoryBox.remove();
+          isBoxOpen = false;
+        }
+      } catch (err) {
+        console.error('Error saving entry:', err);
+      }
     }
   });
 
