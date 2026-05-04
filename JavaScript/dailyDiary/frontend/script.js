@@ -1,28 +1,32 @@
 const body = document.querySelector("body");
+const blurOverlay = document.getElementById("blurOverlay");
 const scrollingSection = document.querySelector(".scrollingSection");
 const createMemory = document.querySelector(".createMemory");
-const memoryBox = document.querySelector(".memoryBox");
 const mainTitle = document.querySelector(".main-title");
 let isBoxOpen = false;
+
+if (localStorage.getItem("mySecret")) {
+  createMemory.style.display = "flex";
+}
 
 scrollingSection.addEventListener("scroll", () => {
   const scrollTop = scrollingSection.scrollTop;
   const fadeDistance = 150;
-  let opacity = 1 - (scrollTop / fadeDistance);
+  let opacity = 1 - scrollTop / fadeDistance;
   if (opacity < 0) opacity = 0;
   if (mainTitle) mainTitle.style.opacity = opacity;
 });
 
-const API_URL = 'http://localhost:5000/api';
+const API_URL = "http://localhost:5000/api";
 
 async function fetchEntries() {
   try {
     const res = await fetch(`${API_URL}/entries`);
     const entries = await res.json();
-    scrollingSection.innerHTML = '';
+    scrollingSection.innerHTML = "";
     entries.forEach(renderEntry);
   } catch (err) {
-    console.error('Error fetching entries:', err);
+    console.error("Error fetching entries:", err);
   }
 }
 
@@ -300,39 +304,21 @@ getActualTime();
 
 function getLocation() {
   const locationElement = document.getElementById("location");
-
   const weatherElement = document.getElementById("weather");
 
-  if (navigator.geolocation) {
+  const cachedLat = localStorage.getItem("diary_lat");
+  const cachedLon = localStorage.getItem("diary_lon");
+
+  if (cachedLat && cachedLon) {
+    fetchLocationAndWeather(parseFloat(cachedLat), parseFloat(cachedLon));
+  } else if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
-      async (position) => {
+      (position) => {
         const lat = position.coords.latitude;
         const lon = position.coords.longitude;
-
-        const clientLanguage = navigator.language;
-
-        try {
-          const geoRes = await fetch(
-            `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=${clientLanguage}`,
-          );
-          const geoData = await geoRes.json();
-
-          const weatherRes = await fetch(
-            `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`,
-          );
-          const weatherData = await weatherRes.json();
-
-          const temp = weatherData.current_weather.temperature;
-          const code = weatherData.current_weather.weathercode;
-          const lang = navigator.language.split("-")[0];
-          const status = getWeatherDescription(code, lang);
-
-          weatherElement.innerText = `${temp}°C - ${status}`;
-          locationElement.innerText = `${geoData.city}, ${geoData.principalSubdivision}, ${geoData.countryName}, ${geoData.continent}`;
-        } catch (error) {
-          locationElement.innerText = `Pos: ${lat.toFixed(2)}, ${lon.toFixed(2)}`;
-          weatherElement.innerText = "N/D";
-        }
+        localStorage.setItem("diary_lat", lat);
+        localStorage.setItem("diary_lon", lon);
+        fetchLocationAndWeather(lat, lon);
       },
       () => {
         locationElement.innerText = "Accesso posizione negato";
@@ -343,11 +329,41 @@ function getLocation() {
   }
 }
 
+async function fetchLocationAndWeather(lat, lon) {
+  const locationElement = document.getElementById("location");
+  const weatherElement = document.getElementById("weather");
+  const clientLanguage = navigator.language;
+
+  try {
+    const geoRes = await fetch(
+      `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=${clientLanguage}`,
+    );
+    const geoData = await geoRes.json();
+
+    const weatherRes = await fetch(
+      `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`,
+    );
+    const weatherData = await weatherRes.json();
+
+    const temp = weatherData.current_weather.temperature;
+    const code = weatherData.current_weather.weathercode;
+    const lang = navigator.language.split("-")[0];
+    const status = getWeatherDescription(code, lang);
+
+    weatherElement.innerText = `${temp}°C - ${status}`;
+    locationElement.innerText = `${geoData.city}, ${geoData.principalSubdivision}, ${geoData.countryName}, ${geoData.continent}`;
+  } catch (error) {
+    locationElement.innerText = `Pos: ${lat.toFixed(2)}, ${lon.toFixed(2)}`;
+    weatherElement.innerText = "N/D";
+  }
+}
+
 getLocation();
 
 createMemory.addEventListener("click", () => {
   if (isBoxOpen) return;
   isBoxOpen = true;
+  blurOverlay.classList.add("active");
 
   const memoryBox = document.createElement("div");
   memoryBox.classList.add("memoryBox");
@@ -370,19 +386,24 @@ createMemory.addEventListener("click", () => {
   saveBtn.classList.add("createMemory");
 
   saveBtn.addEventListener("click", async () => {
+    const secret = localStorage.getItem("mySecret");
+
     if (title.value === "" || testo.value === "") {
       return;
     } else {
       try {
         const res = await fetch(`${API_URL}/entries`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ title: title.value, content: testo.value })
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: secret,
+          },
+          body: JSON.stringify({ title: title.value, content: testo.value }),
         });
 
         if (res.ok) {
           const newEntry = await res.json();
-          // Prepend new entry to UI
+
           const post = document.createElement("div");
           post.classList.add("post");
 
@@ -408,10 +429,17 @@ createMemory.addEventListener("click", () => {
           scrollingSection.prepend(post);
 
           memoryBox.remove();
+          blurOverlay.classList.remove("active");
           isBoxOpen = false;
+        } else {
+          const errorData = await res.json();
+          alert(
+            "Errore: " + (errorData.error || "Impossibile salvare il ricordo"),
+          );
         }
       } catch (err) {
-        console.error('Error saving entry:', err);
+        console.error("Error saving entry:", err);
+        alert("Errore di connessione al server");
       }
     }
   });
@@ -422,6 +450,7 @@ createMemory.addEventListener("click", () => {
 
   closeBtn.addEventListener("click", () => {
     memoryBox.remove();
+    blurOverlay.classList.remove("active");
     isBoxOpen = false;
   });
 
